@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Simulador TV - ICT</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+
+        .navbar {
+            background: #333;
+            color: white;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 35px;
+        }
+
+        .navbar .logo {
+            font-weight: bold;
+            font-size: 1.4rem;
+            margin-right: 20px;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+        }
+
+        .navbar a:hover {
+            background: #555;
+        }
+
+        .salir {
+            margin-left: auto;
+            background: #e33629;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            padding: 30px;
+            border-radius: 10px;
+            background: #fafafa;
+        }
+
+        button {
+            padding: 10px 16px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 6px;
+            border: 1px solid #aaa;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="navbar">
+        <span class="logo">📡 Simulador TV</span>
+
+        <a href="componentes">Ingresar Componentes</a>
+        <a href="#">Calcular Plantas</a>
+        <a href="#">Mi Edificio</a>
+        <a href="#">Historial</a>
+
+        <a href="#" class="salir">Salir</a>
+    </div>
+
+    <div class="content">
+        <h1>Bienvenido al Simulador de ICT</h1>
+
+        <div class="card">
+            <h2>Estado del Proyecto</h2>
+
+            <p>Nivel de Cabecera configurado: <b>170 dBµV</b></p>
+
+            <hr>
+
+            <p>
+                Selecciona una opción del menú superior para empezar a dimensionar
+                la red coaxial.
+            </p>
+
+            <button onclick="location.href='componentes'">
+                Crear Nueva Simulación
+            </button>
+        </div>
+    </div>
+
+</body>
+</html>

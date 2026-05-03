@@ -1,24 +1,43 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
-                      http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
-  version="4.0">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
+         http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
 
     <display-name>Simulador de Señal TV - ICT</display-name>
 
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+
     <servlet>
-        <servlet-name>ServletLogin</servlet-name>
-        <servlet-class>Login</servlet-class>
+        <servlet-name>ComponentesServlet</servlet-name>
+        <servlet-class>ComponentesServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>ServletLogin</servlet-name>
-        <url-pattern>/ejecutarLogin</url-pattern>
+        <servlet-name>ComponentesServlet</servlet-name>
+        <url-pattern>/componentes</url-pattern>
     </servlet-mapping>
 
-    <welcome-file-list>
-        <welcome-file>login.html</welcome-file>
-    </welcome-file-list>
+    <servlet>
+        <servlet-name>GuardarComponente</servlet-name>
+        <servlet-class>GuardarComponente</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>GuardarComponente</servlet-name>
+        <url-pattern>/guardarComponente</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>EliminarComponente</servlet-name>
+        <servlet-class>EliminarComponente</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>EliminarComponente</servlet-name>
+        <url-pattern>/eliminarComponente</url-pattern>
+    </servlet-mapping>
 
 </web-app>
