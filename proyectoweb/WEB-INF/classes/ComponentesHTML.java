@@ -259,7 +259,7 @@ public class ComponentesHTML {
         html += "<div class='navbar'>";
         html += "<span class='logo'>📡 Simulador TV</span>";
         html += "<a href='componentes' class='activo'>Ingresar Componentes</a>";
-        html += "<a href='#'>Calcular Plantas</a>";
+        html += "<a href='calcular'>Calcular Plantas</a>";
         html += "<a href='#'>Mi Edificio</a>";
         html += "<a href='#'>Historial</a>";
         html += "<a href='#' class='salir'>Salir</a>";

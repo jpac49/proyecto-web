@@ -39,5 +39,15 @@
         <servlet-name>EliminarComponente</servlet-name>
         <url-pattern>/eliminarComponente</url-pattern>
     </servlet-mapping>
+	
+	<servlet>
+        <servlet-name>CalculoServlet</servlet-name>
+        <servlet-class>CalculoServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>CalculoServlet</servlet-name>
+        <url-pattern>/calcular</url-pattern>
+    </servlet-mapping>
 
 </web-app>
