@@ -9,7 +9,8 @@ public class ComponentesServlet extends HttpServlet {
         throws ServletException, IOException {
 
         response.setContentType("text/html;charset=UTF-8");
-
+        response.setCharacterEncoding("UTF-8");
+        
         PrintWriter out = response.getWriter();
 
         String rutaBD = getServletContext().getRealPath("/WEB-INF/bd/SimuladorICT.accdb");

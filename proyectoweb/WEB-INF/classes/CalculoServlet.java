@@ -8,47 +8,60 @@ public class CalculoServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
 
+        // Configuración de cabeceras para evitar problemas con tildes y ñ
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
 
         String rutaBD = getServletContext().getRealPath("/WEB-INF/bd/SimuladorICT.accdb");
 
-        // Creamos listas vacías por seguridad
-        ArrayList<Componente> cables = new ArrayList<Componente>();
-        ArrayList<Componente> tomas = new ArrayList<Componente>();
-        ArrayList<Componente> distribuidores = new ArrayList<Componente>();
-        ArrayList<Componente> derivadores = new ArrayList<Componente>();
+        ArrayList<Componente> cables = new ArrayList<>();
+        ArrayList<Componente> tomas = new ArrayList<>();
+        ArrayList<Componente> distribuidores = new ArrayList<>();
+        ArrayList<Componente> derivadores = new ArrayList<>();
 
         try {
-            // Usamos ComponenteDAO.listar() para traer todos
+            // Traemos todos los componentes de la base de datos relacional
             ArrayList<Componente> todos = ComponenteDAO.listar(rutaBD);
 
-            // Filtramos los componentes por tipo para rellenar cada selector del storyboard
+            // Clasificación por tipo para los selectores del HTML
             for (Componente c : todos) {
-                if ("Cable Coaxial".equals(c.getTipo())) {
-                    cables.add(c);
-                } else if ("Toma".equals(c.getTipo())) { // Ajustado a 'Toma' como en ComponentesHTML.java
-                    tomas.add(c);
-                } else if ("Distribuidor".equals(c.getTipo())) {
-                    distribuidores.add(c);
-                } else if ("Derivador".equals(c.getTipo())) {
-                    derivadores.add(c);
+                String tipo = (c.getTipo() != null) ? c.getTipo() : "";
+                
+                switch (tipo) {
+                    case "Cable Coaxial":
+                        cables.add(c);
+                        break;
+                    case "Toma":
+                        tomas.add(c);
+                        break;
+                    case "Distribuidor":
+                        distribuidores.add(c);
+                        break;
+                    case "Derivador":
+                        derivadores.add(c);
+                        break;
                 }
             }
 
         } catch (Exception e) {
-            // En producción, esto debería ir a un log
-            System.err.println("Error al cargar componentes para cálculo: " + e.getMessage());
+            e.printStackTrace(); // Para ver el error detallado en la consola de Tomcat
         }
 
-        // Recuperamos el resultado del cálculo si venimos de ejecutarCalculo (explicado más abajo)
-        Integer maxPlantasResult = null;
-        if (request.getAttribute("maxPlantas") != null) {
-            maxPlantasResult = (Integer) request.getAttribute("maxPlantas");
-        }
+        // Si venimos de un cálculo fallido o exitoso, recogemos el mensaje o resultado
+        String mensaje = request.getParameter("mensaje");
+        Integer maxPlantasResult = (Integer) request.getAttribute("maxPlantas");
 
-        // Generamos el HTML dinámico
-        String html = CalculoHTML.generarPagina(cables, tomas, distribuidores, derivadores, null, maxPlantasResult);
+        // Generamos la página pasándole las listas filtradas
+        // Nota: Asegúrate de que el nombre de la clase en CalculoHTML.java coincida con la llamada
+        String html = CalculoHTML.generarPagina(
+            cables, 
+            tomas, 
+            distribuidores, 
+            derivadores, 
+            mensaje, 
+            maxPlantasResult
+        );
 
         out.println(html);
     }

@@ -10,250 +10,60 @@ public class ComponentesHTML {
         html += "<html lang='es'>";
         html += "<head>";
         html += "<meta charset='UTF-8'>";
+        html += "<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>";
         html += "<title>Componentes - Simulador ICT</title>";
 
         html += "<style>";
-
-        html += "body {";
-        html += "font-family: Arial, sans-serif;";
-        html += "margin: 0;";
-        html += "background-color: #f5f5f5;";
-        html += "}";
-
-        html += ".navbar {";
-        html += "background: #333;";
-        html += "color: white;";
-        html += "padding: 1rem 1.5rem;";
-        html += "display: flex;";
-        html += "align-items: center;";
-        html += "gap: 35px;";
-        html += "}";
-
-        html += ".navbar .logo {";
-        html += "font-weight: bold;";
-        html += "font-size: 1.4rem;";
-        html += "margin-right: 20px;";
-        html += "}";
-
-        html += ".navbar a {";
-        html += "color: white;";
-        html += "text-decoration: none;";
-        html += "padding: 10px 14px;";
-        html += "border-radius: 8px;";
-        html += "font-size: 1.1rem;";
-        html += "}";
-
-        html += ".navbar a:hover {";
-        html += "background: #555;";
-        html += "}";
-
-        html += ".navbar a.activo {";
-        html += "background: #5a5a5a;";
-        html += "}";
-
-        html += ".salir {";
-        html += "margin-left: auto;";
-        html += "background: #e33629;";
-        html += "}";
-
-        html += ".content {";
-        html += "padding: 30px;";
-        html += "}";
-
-        html += ".contenedor-componentes {";
-        html += "max-width: 1250px;";
-        html += "margin: 0 auto;";
-        html += "}";
-
-        html += ".layout-componentes {";
-        html += "display: grid;";
-        html += "grid-template-columns: 420px 1fr;";
-        html += "gap: 28px;";
-        html += "align-items: start;";
-        html += "}";
-
-        html += ".form-card, .galeria-card {";
-        html += "background: white;";
-        html += "border-radius: 16px;";
-        html += "padding: 28px;";
-        html += "border: 1px solid #ddd;";
-        html += "box-shadow: 0 2px 8px rgba(0,0,0,0.04);";
-        html += "}";
-
-        html += "h1 {";
-        html += "font-size: 2.2rem;";
-        html += "margin-bottom: 28px;";
-        html += "}";
-
-        html += "h2 {";
-        html += "margin-top: 0;";
-        html += "}";
-
-        html += "hr {";
-        html += "border: none;";
-        html += "border-top: 1px solid #ddd;";
-        html += "margin: 20px 0;";
-        html += "}";
-
-        html += "label {";
-        html += "display: block;";
-        html += "margin-top: 18px;";
-        html += "margin-bottom: 6px;";
-        html += "font-weight: bold;";
-        html += "}";
-
-        html += "input, select {";
-        html += "width: 100%;";
-        html += "padding: 12px;";
-        html += "font-size: 1rem;";
-        html += "box-sizing: border-box;";
-        html += "border: 1px solid #ccc;";
-        html += "border-radius: 10px;";
-        html += "}";
-
-        html += ".bloque-extra {";
-        html += "margin-top: 25px;";
-        html += "padding-top: 12px;";
-        html += "border-top: 1px solid #e3e3e3;";
-        html += "}";
-
-        html += ".oculto {";
-        html += "display: none;";
-        html += "}";
-
-        html += ".btn-principal {";
-        html += "margin-top: 25px;";
-        html += "width: 100%;";
-        html += "background: #333;";
-        html += "color: white;";
-        html += "border: none;";
-        html += "font-weight: bold;";
-        html += "padding: 14px;";
-        html += "font-size: 1.05rem;";
-        html += "border-radius: 8px;";
-        html += "cursor: pointer;";
-        html += "}";
-
-        html += ".btn-principal:hover {";
-        html += "background: #555;";
-        html += "}";
-
-        html += ".galeria-grid {";
-        html += "display: grid;";
-        html += "grid-template-columns: repeat(2, minmax(230px, 1fr));";
-        html += "gap: 18px;";
-        html += "margin-top: 22px;";
-        html += "}";
-
-        html += ".tarjeta-componente {";
-        html += "background: #f1f1f1;";
-        html += "border-radius: 14px;";
-        html += "padding: 18px;";
-        html += "border: 1px solid #ddd;";
-        html += "}";
-
-        html += ".etiqueta-tipo {";
-        html += "display: inline-block;";
-        html += "background: #333;";
-        html += "color: white;";
-        html += "font-size: 0.8rem;";
-        html += "padding: 5px 10px;";
-        html += "border-radius: 20px;";
-        html += "margin-bottom: 12px;";
-        html += "}";
-
-        html += ".tarjeta-componente h3 {";
-        html += "margin: 0 0 12px 0;";
-        html += "font-size: 1.5rem;";
-        html += "}";
-
-        html += ".fila-dato {";
-        html += "display: flex;";
-        html += "justify-content: space-between;";
-        html += "gap: 12px;";
-        html += "border-bottom: 1px dashed #ccc;";
-        html += "padding: 7px 0;";
-        html += "font-size: 0.95rem;";
-        html += "}";
-
-        html += ".fila-dato span:first-child {";
-        html += "font-weight: bold;";
-        html += "}";
-
-        html += ".mensaje {";
-        html += "background: #fff3cd;";
-        html += "padding: 12px;";
-        html += "border-radius: 8px;";
-        html += "border: 1px solid #ffecb5;";
-        html += "margin-bottom: 20px;";
-        html += "}";
-
-        html += ".vacio {";
-        html += "color: #666;";
-        html += "font-style: italic;";
-        html += "}";
-
-        html += ".btn-eliminar {";
-        html += "margin-top: 15px;";
-        html += "width: 100%;";
-        html += "background: #d93025;";
-        html += "color: white;";
-        html += "border: none;";
-        html += "font-weight: bold;";
-        html += "padding: 10px;";
-        html += "border-radius: 8px;";
-        html += "cursor: pointer;";
-        html += "font-size: 0.95rem;";
-        html += "}";
-
-        html += ".btn-eliminar:hover {";
-        html += "background: #b3261e;";
-        html += "}";
-
-        html += ".id-pequeno {";
-        html += "font-size: 0.85rem;";
-        html += "color: #777;";
-        html += "margin-bottom: 10px;";
-        html += "}";
-
+        html += "body { font-family: Arial, sans-serif; margin: 0; background-color: #f5f5f5; }";
+        html += ".navbar { background: #333; color: white; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 35px; }";
+        html += ".navbar .logo { font-weight: bold; font-size: 1.4rem; margin-right: 20px; }";
+        html += ".navbar a { color: white; text-decoration: none; padding: 10px 14px; border-radius: 8px; font-size: 1.1rem; }";
+        html += ".navbar a:hover { background: #555; }";
+        html += ".navbar a.activo { background: #5a5a5a; }";
+        html += ".salir { margin-left: auto; background: #e33629; }";
+        html += ".content { padding: 30px; }";
+        html += ".contenedor-componentes { max-width: 1250px; margin: 0 auto; }";
+        html += ".layout-componentes { display: grid; grid-template-columns: 420px 1fr; gap: 28px; align-items: start; }";
+        html += ".form-card, .galeria-card { background: white; border-radius: 16px; padding: 28px; border: 1px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }";
+        html += "h1 { font-size: 2.2rem; margin-bottom: 28px; }";
+        html += "h2 { margin-top: 0; }";
+        html += "hr { border: none; border-top: 1px solid #ddd; margin: 20px 0; }";
+        html += "label { display: block; margin-top: 18px; margin-bottom: 6px; font-weight: bold; }";
+        html += "input, select { width: 100%; padding: 12px; font-size: 1rem; box-sizing: border-box; border: 1px solid #ccc; border-radius: 10px; }";
+        html += ".bloque-extra { margin-top: 25px; padding-top: 12px; border-top: 1px solid #e3e3e3; }";
+        html += ".oculto { display: none; }";
+        html += ".btn-principal { margin-top: 25px; width: 100%; background: #333; color: white; border: none; font-weight: bold; padding: 14px; font-size: 1.05rem; border-radius: 8px; cursor: pointer; }";
+        html += ".btn-principal:hover { background: #555; }";
+        html += ".galeria-grid { display: grid; grid-template-columns: repeat(2, minmax(230px, 1fr)); gap: 18px; margin-top: 22px; }";
+        html += ".tarjeta-componente { background: #f1f1f1; border-radius: 14px; padding: 18px; border: 1px solid #ddd; }";
+        html += ".etiqueta-tipo { display: inline-block; background: #333; color: white; font-size: 0.8rem; padding: 5px 10px; border-radius: 20px; margin-bottom: 12px; }";
+        html += ".tarjeta-componente h3 { margin: 0 0 12px 0; font-size: 1.5rem; }";
+        html += ".fila-dato { display: flex; justify-content: space-between; gap: 12px; border-bottom: 1px dashed #ccc; padding: 7px 0; font-size: 0.95rem; }";
+        html += ".fila-dato span:first-child { font-weight: bold; }";
+        html += ".mensaje { background: #fff3cd; padding: 12px; border-radius: 8px; border: 1px solid #ffecb5; margin-bottom: 20px; }";
+        html += ".vacio { color: #666; font-style: italic; }";
+        html += ".btn-eliminar { margin-top: 15px; width: 100%; background: #d93025; color: white; border: none; font-weight: bold; padding: 10px; border-radius: 8px; cursor: pointer; font-size: 0.95rem; }";
+        html += ".btn-eliminar:hover { background: #b3261e; }";
+        html += ".id-pequeno { font-size: 0.85rem; color: #777; margin-bottom: 10px; }";
         html += "</style>";
 
         html += "<script>";
-
         html += "function cambiarTipoComponente() {";
-        html += "var tipo = document.getElementById('tipo').value;";
-
-        html += "var camposCable = document.getElementById('camposCable');";
-        html += "var camposToma = document.getElementById('camposToma');";
-
-        html += "var at470 = document.getElementById('at470');";
-        html += "var at862 = document.getElementById('at862');";
-        html += "var atPaso = document.getElementById('atPaso');";
-
-        html += "camposCable.classList.add('oculto');";
-        html += "camposToma.classList.add('oculto');";
-
-        html += "at470.required = false;";
-        html += "at862.required = false;";
-        html += "atPaso.required = false;";
-
-        html += "if (tipo === 'Cable Coaxial') {";
-        html += "camposCable.classList.remove('oculto');";
-        html += "at470.required = true;";
-        html += "at862.required = true;";
+        html += "  var tipo = document.getElementById('tipo').value;";
+        html += "  var cCable = document.getElementById('camposCable');";
+        html += "  var cToma = document.getElementById('camposToma');";
+        html += "  var cDeriv = document.getElementById('camposDerivador');";
+        html += "  var cDist = document.getElementById('camposDistribucion');";
+        html += "  cCable.classList.add('oculto'); cToma.classList.add('oculto');";
+        html += "  cDeriv.classList.add('oculto'); cDist.classList.add('oculto');";
+        html += "  if (tipo === 'Cable Coaxial') cCable.classList.remove('oculto');";
+        html += "  else if (tipo === 'Toma') cToma.classList.remove('oculto');";
+        html += "  else if (tipo === 'Derivador') cDeriv.classList.remove('oculto');";
+        html += "  else if (tipo === 'Distribuidor') cDist.classList.remove('oculto');";
         html += "}";
-
-        html += "if (tipo === 'Toma') {";
-        html += "camposToma.classList.remove('oculto');";
-        html += "atPaso.required = true;";
-        html += "}";
-
-        html += "}";
-
         html += "</script>";
 
         html += "</head>";
-
         html += "<body>";
 
         html += "<div class='navbar'>";
@@ -267,7 +77,6 @@ public class ComponentesHTML {
 
         html += "<div class='content'>";
         html += "<div class='contenedor-componentes'>";
-
         html += "<h1>Ingresar Componentes</h1>";
 
         if (mensaje != null && !mensaje.equals("")) {
@@ -275,16 +84,14 @@ public class ComponentesHTML {
         }
 
         html += "<div class='layout-componentes'>";
-
         html += "<div class='form-card'>";
-        html += "<h2>Añadir Nuevo Componente</h2>";
+        html += "<h2>A&ntilde;adir Nuevo</h2>";
         html += "<hr>";
-
         html += "<form action='guardarComponente' method='POST'>";
-
+        
         html += "<label for='tipo'>Tipo</label>";
         html += "<select name='tipo' id='tipo' onchange='cambiarTipoComponente()' required>";
-        html += "<option value=''>-- Seleccionar tipo --</option>";
+        html += "<option value=''>-- Seleccionar --</option>";
         html += "<option value='Cable Coaxial'>Cable Coaxial</option>";
         html += "<option value='Toma'>Toma</option>";
         html += "<option value='Derivador'>Derivador</option>";
@@ -292,128 +99,80 @@ public class ComponentesHTML {
         html += "</select>";
 
         html += "<label for='modelo'>Modelo</label>";
-        html += "<input type='text' id='modelo' name='modelo' placeholder='Ejemplo: CE-752 / Toma R-TV' required>";
+        html += "<input type='text' id='modelo' name='modelo' required>";
 
-        html += "<label for='precio'>Precio (€)</label>";
-        html += "<input type='number' step='0.01' id='precio' name='precio' placeholder='Ejemplo: 4.50' required>";
+        html += "<label for='precio'>Precio (&euro;)</label>";
+        html += "<input type='number' step='0.01' id='precio' name='precio' required>";
 
+        // Bloques dinámicos
         html += "<div id='camposCable' class='bloque-extra oculto'>";
-        html += "<h3>Propiedades del Cable Coaxial</h3>";
-
-        html += "<label for='at470'>Atenuación @470 MHz / 100m en dB</label>";
-        html += "<input type='number' step='0.01' id='at470' name='at470' placeholder='Ejemplo: 12.30'>";
-
-        html += "<label for='at862'>Atenuación @862 MHz / 100m en dB</label>";
-        html += "<input type='number' step='0.01' id='at862' name='at862' placeholder='Ejemplo: 18.70'>";
-
+        html += "<label>Aten. @470 MHz</label><input type='number' step='0.01' name='at470'>";
+        html += "<label>Aten. @862 MHz</label><input type='number' step='0.01' name='at862'>";
         html += "</div>";
 
         html += "<div id='camposToma' class='bloque-extra oculto'>";
-        html += "<h3>Propiedades de la Toma</h3>";
-
-        html += "<label for='atPaso'>Atenuación de paso en dB</label>";
-        html += "<input type='number' step='0.01' id='atPaso' name='atPaso' placeholder='Ejemplo: 1.20'>";
-
+        html += "<label>Aten. Derivaci&oacute;n (dB)</label><input type='number' step='0.01' name='atDerivacion'>";
         html += "</div>";
 
-        html += "<button type='submit' class='btn-principal'>Añadir Componente</button>";
-
-        html += "</form>";
+        html += "<div id='camposDerivador' class='bloque-extra oculto'>";
+        html += "<label>N&ordm; Salidas</label><input type='number' name='numSalidas'>";
+        html += "<label>Aten. Salida (dB)</label><input type='number' step='0.01' name='atSalida'>";
+        html += "<label>Aten. Paso (dB)</label><input type='number' step='0.01' name='atPaso'>";
         html += "</div>";
 
-        html += "<div class='galeria-card'>";
-        html += "<h2>Galería de Componentes</h2>";
-        html += "<hr>";
+        html += "<div id='camposDistribucion' class='bloque-extra oculto'>";
+        html += "<label>N&ordm; Salidas</label><input type='number' name='numSalidasDist'>"; // Cambiado
+        html += "<label>Aten. Salida (dB)</label><input type='number' step='0.01' name='atSalidaDist'>"; // Cambiado
+        html += "</div>";
 
+        html += "<button type='submit' class='btn-principal'>Guardar Componente</button>";
+        html += "</form></div>";
+
+        html += "<div class='galeria-card'><h2>Galer&iacute;a</h2><hr>";
         if (componentes.size() == 0) {
-            html += "<p class='vacio'>Todavía no hay componentes guardados.</p>";
+            html += "<p class='vacio'>No hay componentes.</p>";
         } else {
             html += "<div class='galeria-grid'>";
-
-            for (int i = 0; i < componentes.size(); i++) {
-                Componente c = componentes.get(i);
-
+            for (Componente c : componentes) {
                 html += "<div class='tarjeta-componente'>";
-
                 html += "<div class='etiqueta-tipo'>" + escapar(c.getTipo()) + "</div>";
-                html += "<div class='id-pequeno'>ID: " + c.getId() + "</div>";
                 html += "<h3>" + escapar(c.getModelo()) + "</h3>";
-
-                html += "<div class='fila-dato'>";
-                html += "<span>Precio</span>";
-                html += "<span>" + mostrarDouble(c.getPrecio()) + " &euro;</span>";
-                html += "</div>";
+                html += "<div class='fila-dato'><span>Precio</span><span>" + mostrarDouble(c.getPrecio()) + " &euro;</span></div>";
 
                 if ("Cable Coaxial".equals(c.getTipo())) {
-                    html += "<div class='fila-dato'>";
-                    html += "<span>Aten. 470 MHz</span>";
-                    html += "<span>" + mostrarDouble(c.getAt470()) + " dB/100m</span>";
-                    html += "</div>";
-
-                    html += "<div class='fila-dato'>";
-                    html += "<span>Aten. 862 MHz</span>";
-                    html += "<span>" + mostrarDouble(c.getAt862()) + " dB/100m</span>";
-                    html += "</div>";
+                    html += "<div class='fila-dato'><span>Aten. 470MHz</span><span>" + mostrarDouble(c.getAt470()) + " dB</span></div>";
+                    html += "<div class='fila-dato'><span>Aten. 862MHz</span><span>" + mostrarDouble(c.getAt862()) + " dB</span></div>";
                 } else if ("Toma".equals(c.getTipo())) {
-                    html += "<div class='fila-dato'>";
-                    html += "<span>Aten. paso</span>";
-                    html += "<span>" + mostrarDouble(c.getAtPaso()) + " dB</span>";
-                    html += "</div>";
-                } else {
-                    html += "<div class='fila-dato'>";
-                    html += "<span>Tipo</span>";
-                    html += "<span>" + escapar(c.getTipo()) + "</span>";
-                    html += "</div>";
+                    html += "<div class='fila-dato'><span>Aten. Deriv.</span><span>" + mostrarDouble(c.getAtDerivacion()) + " dB</span></div>";
+                } else if ("Derivador".equals(c.getTipo())) {
+                    html += "<div class='fila-dato'><span>Salidas</span><span>" + c.getNumSalidas() + "</span></div>";
+                    html += "<div class='fila-dato'><span>Aten. Salida</span><span>" + mostrarDouble(c.getAtSalida()) + " dB</span></div>";
+                    html += "<div class='fila-dato'><span>Aten. Paso</span><span>" + mostrarDouble(c.getAtPaso()) + " dB</span></div>";
+                } else if ("Distribuidor".equals(c.getTipo())) {
+                    html += "<div class='fila-dato'><span>Salidas</span><span>" + c.getNumSalidas() + "</span></div>";
+                    html += "<div class='fila-dato'><span>Aten. Salida</span><span>" + mostrarDouble(c.getAtSalida()) + " dB</span></div>";
                 }
 
-                html += "<form action='eliminarComponente' method='POST' ";
-                html += "onsubmit=\"return confirm('¿Seguro que quieres eliminar este componente?');\">";
-
+                html += "<form action='eliminarComponente' method='POST' onsubmit=\"return confirm('¿Borrar?');\">";
                 html += "<input type='hidden' name='id' value='" + c.getId() + "'>";
-
-                html += "<button type='submit' class='btn-eliminar'>";
-                html += "Eliminar";
-                html += "</button>";
-
-                html += "</form>";
-
+                html += "<button type='submit' class='btn-eliminar'>Eliminar</button></form>";
                 html += "</div>";
             }
-
             html += "</div>";
         }
-
-        html += "</div>";
-
-        html += "</div>";
-        html += "</div>";
-        html += "</div>";
-
-        html += "</body>";
-        html += "</html>";
+        html += "</div></div></div></div></body></html>";
 
         return html;
     }
 
     private static String mostrarDouble(Double valor) {
-        if (valor == null) {
-            return "-";
-        }
-
-        return String.valueOf(valor);
+        return (valor == null) ? "-" : String.valueOf(valor);
     }
 
     private static String escapar(String texto) {
-        if (texto == null) {
-            return "";
-        }
-
-        texto = texto.replace("&", "&amp;");
-        texto = texto.replace("<", "&lt;");
-        texto = texto.replace(">", "&gt;");
-        texto = texto.replace("\"", "&quot;");
-        texto = texto.replace("'", "&#39;");
-
-        return texto;
+        if (texto == null) return "";
+        return texto.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;")
+                    .replace("á", "&aacute;").replace("é", "&eacute;").replace("í", "&iacute;")
+                    .replace("ó", "&oacute;").replace("ú", "&uacute;").replace("ñ", "&ntilde;");
     }
 }
