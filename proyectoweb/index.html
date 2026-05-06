@@ -38,9 +38,21 @@
             background: #555;
         }
 
+        /* Estilo para que el botón Salir parezca un enlace pero sea funcional */
         .salir {
             margin-left: auto;
             background: #e33629;
+            color: white;
+            border: none;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .salir:hover {
+            background: #b3261e;
         }
 
         .content {
@@ -52,16 +64,35 @@
             padding: 30px;
             border-radius: 10px;
             background: #fafafa;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
 
-        button {
-            padding: 10px 16px;
+        .btn-principal {
+            background: #1a73e8;
+            color: white;
+            padding: 12px 20px;
             font-size: 1rem;
             cursor: pointer;
             border-radius: 6px;
-            border: 1px solid #aaa;
+            border: none;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        .btn-principal:hover {
+            background: #1557b0;
         }
     </style>
+
+    <script>
+        function cerrarApp() {
+            if (confirm("¿Desea cerrar la aplicación?")) {
+                window.close();
+                // Fallback: si el navegador bloquea el cierre, redirige a una página en blanco
+                window.location.href = "about:blank";
+            }
+        }
+    </script>
 </head>
 
 <body>
@@ -70,11 +101,11 @@
         <span class="logo">📡 Simulador TV</span>
 
         <a href="componentes">Ingresar Componentes</a>
-        <a href="#">Calcular Plantas</a>
-        <a href="#">Mi Edificio</a>
-        <a href="#">Historial</a>
+        <a href="calcular">Calcular Plantas</a>
+        <a href="historial">Historial</a>
 
-        <a href="#" class="salir">Salir</a>
+        <!-- Botón Salir con función de cierre -->
+        <button class="salir" onclick="cerrarApp()">Salir</button>
     </div>
 
     <div class="content">
@@ -83,16 +114,16 @@
         <div class="card">
             <h2>Estado del Proyecto</h2>
 
-            <p>Nivel de Cabecera configurado: <b>170 dBµV</b></p>
+            <p>Nivel de Cabecera configurado: <b>Variable por simulación</b></p>
 
-            <hr>
+            <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
 
             <p>
-                Selecciona una opción del menú superior para empezar a dimensionar
-                la red coaxial.
+                Selecciona una opción del menú superior para gestionar tu inventario 
+                de componentes o empezar a dimensionar la red coaxial de un edificio.
             </p>
 
-            <button onclick="location.href='componentes'">
+            <button class="btn-principal" onclick="location.href='componentes'">
                 Crear Nueva Simulación
             </button>
         </div>

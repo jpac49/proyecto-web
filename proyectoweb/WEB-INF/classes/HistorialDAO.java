@@ -3,6 +3,10 @@ import java.util.ArrayList;
 
 public class HistorialDAO {
 
+    /**
+     * Inserta un nuevo registro en el historial. 
+     * Se mantiene igual, ya que el precio real se calcula en el Servlet antes de llamar a este método.
+     */
     public static void insertar(
         String rutaBD,
         String nombre,
@@ -55,6 +59,10 @@ public class HistorialDAO {
         }
     }
 
+    /**
+     * Lista el historial vinculando (JOIN) con la tabla Componentes 
+     * para obtener los nombres de los modelos en lugar de solo los IDs.
+     */
     public static ArrayList<HistorialEntrada> listar(String rutaBD) throws Exception {
 
         ArrayList<HistorialEntrada> lista = new ArrayList<HistorialEntrada>();
@@ -65,27 +73,43 @@ public class HistorialDAO {
         try {
             conexion = BaseDatos.getConexion(rutaBD);
 
-            String sql = "SELECT * FROM [Historial] ORDER BY [Fecha] DESC";
+            // Consulta con TRIPLE JOIN para traer los nombres de serie de los 3 componentes principales
+            String sql = "SELECT H.*, " +
+                         "C.modelo AS NomCable, " +
+                         "D.modelo AS NomDist, " +
+                         "T.modelo AS NomToma " +
+                         "FROM (([Historial] H " +
+                         "INNER JOIN [Componentes] C ON H.IdCable = C.Id) " +
+                         "INNER JOIN [Componentes] D ON H.IdDistribuidor = D.Id) " +
+                         "INNER JOIN [Componentes] T ON H.IdToma = T.Id " +
+                         "ORDER BY H.Fecha DESC";
+
             ps = conexion.prepareStatement(sql);
             rs = ps.executeQuery();
 
             while (rs.next()) {
                 HistorialEntrada h = new HistorialEntrada();
-                h.id               = rs.getInt("Id");
-                h.nombre           = rs.getString("Nombre");
-                h.numPlantas       = rs.getInt("NumPlantas");
+                h.id                 = rs.getInt("Id");
+                h.nombre             = rs.getString("Nombre");
+                h.numPlantas         = rs.getInt("NumPlantas");
                 h.nivelPrimeraPlanta = rs.getDouble("NivelPrimeraPlanta");
                 h.nivelUltimaPlanta  = rs.getDouble("NivelUltimaPlanta");
-                h.precioTotal      = rs.getDouble("PrecioTotal");
-                h.fecha            = rs.getString("Fecha");
-                h.idCable          = rs.getInt("IdCable");
-                h.idDistribuidor   = rs.getInt("IdDistribuidor");
-                h.idToma           = rs.getInt("IdToma");
-                h.idsDerivadores   = rs.getString("IdsDerivadores");
-                h.cabecera         = rs.getDouble("Cabecera");
-                h.distPlantas      = rs.getDouble("DistPlantas");
-                h.distDerDist      = rs.getDouble("DistDerDist");
-                h.distDistToma     = rs.getDouble("DistDistToma");
+                h.precioTotal        = rs.getDouble("PrecioTotal");
+                h.fecha              = rs.getString("Fecha");
+                h.idCable            = rs.getInt("IdCable");
+                h.idDistribuidor     = rs.getInt("IdDistribuidor");
+                h.idToma             = rs.getInt("IdToma");
+                h.idsDerivadores     = rs.getString("IdsDerivadores");
+                h.cabecera           = rs.getDouble("Cabecera");
+                h.distPlantas        = rs.getDouble("DistPlantas");
+                h.distDerDist        = rs.getDouble("DistDerDist");
+                h.distDistToma       = rs.getDouble("DistDistToma");
+
+                // NUEVOS: Guardamos los nombres recuperados del JOIN en el objeto
+                h.modeloCable        = rs.getString("NomCable");
+                h.modeloDistribuidor = rs.getString("NomDist");
+                h.modeloToma         = rs.getString("NomToma");
+
                 lista.add(h);
             }
 

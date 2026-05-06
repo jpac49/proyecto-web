@@ -14,4 +14,7 @@ public class HistorialEntrada {
     public double distPlantas;
     public double distDerDist;
     public double distDistToma;
+    public String modeloCable;
+    public String modeloDistribuidor;
+    public String modeloToma;
 }

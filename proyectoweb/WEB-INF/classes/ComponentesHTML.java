@@ -48,19 +48,31 @@ public class ComponentesHTML {
         html += "</style>";
 
         html += "<script>";
-        html += "function cambiarTipoComponente() {";
-        html += "  var tipo = document.getElementById('tipo').value;";
-        html += "  var cCable = document.getElementById('camposCable');";
-        html += "  var cToma = document.getElementById('camposToma');";
-        html += "  var cDeriv = document.getElementById('camposDerivador');";
-        html += "  var cDist = document.getElementById('camposDistribucion');";
-        html += "  cCable.classList.add('oculto'); cToma.classList.add('oculto');";
-        html += "  cDeriv.classList.add('oculto'); cDist.classList.add('oculto');";
-        html += "  if (tipo === 'Cable Coaxial') cCable.classList.remove('oculto');";
-        html += "  else if (tipo === 'Toma') cToma.classList.remove('oculto');";
-        html += "  else if (tipo === 'Derivador') cDeriv.classList.remove('oculto');";
-        html += "  else if (tipo === 'Distribuidor') cDist.classList.remove('oculto');";
+        html += "function cerrarApp() {";
+        html += "  if (confirm('¿Desea cerrar la aplicación?')) {";
+        html += "    window.close();";
+        html += "    window.location.href = 'about:blank';";
+        html += "  }";
         html += "}";
+        html += "  function cambiarTipoComponente() {";
+        html += "    var tipo = document.getElementById('tipo').value;";
+        html += "    var cCable = document.getElementById('camposCable');";
+        html += "    var cToma = document.getElementById('camposToma');";
+        html += "    var cDeriv = document.getElementById('camposDerivador');";
+        html += "    var cDist = document.getElementById('camposDistribucion');";
+        html += "    var labelPrecio = document.getElementById('labelPrecio');"; // Referencia a la etiqueta
+        html += "    cCable.classList.add('oculto'); cToma.classList.add('oculto');";
+        html += "    cDeriv.classList.add('oculto'); cDist.classList.add('oculto');";
+        html += "    if (tipo === 'Cable Coaxial') {";
+        html += "       cCable.classList.remove('oculto');";
+        html += "       labelPrecio.innerHTML = 'Precio por metro (&euro;/m)';"; // Cambio a precio por metro
+        html += "    } else {";
+        html += "       labelPrecio.innerHTML = 'Precio (&euro;)';"; // Cambio a precio normal
+        html += "       if (tipo === 'Toma') cToma.classList.remove('oculto');";
+        html += "       else if (tipo === 'Derivador') cDeriv.classList.remove('oculto');";
+        html += "       else if (tipo === 'Distribuidor') cDist.classList.remove('oculto');";
+        html += "    }";
+        html += "  }";
         html += "</script>";
 
         html += "</head>";
@@ -70,9 +82,8 @@ public class ComponentesHTML {
         html += "<span class='logo'>📡 Simulador TV</span>";
         html += "<a href='componentes' class='activo'>Ingresar Componentes</a>";
         html += "<a href='calcular'>Calcular Plantas</a>";
-        html += "<a href='#'>Mi Edificio</a>";
-        html += "<a href='#'>Historial</a>";
-        html += "<a href='#' class='salir'>Salir</a>";
+        html += "<a href='historial'>Historial</a>";
+        html += "<button onclick='cerrarApp()' style='margin-left:auto; background:#e33629; color:white; border:none; padding:10px 14px; border-radius:8px; cursor:pointer; font-size:1.1rem;'>Salir</button>";
         html += "</div>";
 
         html += "<div class='content'>";
@@ -99,30 +110,31 @@ public class ComponentesHTML {
         html += "</select>";
 
         html += "<label for='modelo'>Modelo</label>";
-        html += "<input type='text' id='modelo' name='modelo' required>";
+        html += "<input type='text' id='modelo' name='modelo' placeholder='Ej: CE-752' required>";
 
-        html += "<label for='precio'>Precio (&euro;)</label>";
-        html += "<input type='number' step='0.01' id='precio' name='precio' required>";
+        // Etiqueta con ID para que JavaScript la modifique
+        html += "<label id='labelPrecio' for='precio'>Precio (&euro;)</label>";
+        html += "<input type='number' step='0.01' id='precio' name='precio' placeholder='Ej: 3' required>";
 
-        // Bloques dinámicos
+        // Bloques dinámicos actualizados
         html += "<div id='camposCable' class='bloque-extra oculto'>";
-        html += "<label>Aten. @470 MHz</label><input type='number' step='0.01' name='at470'>";
-        html += "<label>Aten. @862 MHz</label><input type='number' step='0.01' name='at862'>";
+        html += "<label>Aten. @470 MHz (dB/100m)</label><input type='number' step='0.01' name='at470' placeholder='Ej: 12.3'>";
+        html += "<label>Aten. @862 MHz (dB/100m)</label><input type='number' step='0.01' name='at862' placeholder='Ej: 18.7'>";
         html += "</div>";
 
         html += "<div id='camposToma' class='bloque-extra oculto'>";
-        html += "<label>Aten. Derivaci&oacute;n (dB)</label><input type='number' step='0.01' name='atDerivacion'>";
+        html += "<label>Aten. Derivaci&oacute;n (dB)</label><input type='number' step='0.01' name='atDerivacion' placeholder='Ej: 1.5'>";
         html += "</div>";
 
         html += "<div id='camposDerivador' class='bloque-extra oculto'>";
-        html += "<label>N&ordm; Salidas</label><input type='number' name='numSalidas'>";
-        html += "<label>Aten. Salida (dB)</label><input type='number' step='0.01' name='atSalida'>";
-        html += "<label>Aten. Paso (dB)</label><input type='number' step='0.01' name='atPaso'>";
+        html += "<label>N&ordm; Salidas</label><input type='number' name='numSalidas' placeholder='Ej: 2'>";
+        html += "<label>Aten. Salida (dB)</label><input type='number' step='0.01' name='atSalida' placeholder='Ej: 15.0'>";
+        html += "<label>Aten. Paso (dB)</label><input type='number' step='0.01' name='atPaso' placeholder='Ej: 1.2'>";
         html += "</div>";
 
         html += "<div id='camposDistribucion' class='bloque-extra oculto'>";
-        html += "<label>N&ordm; Salidas</label><input type='number' name='numSalidasDist'>"; // Cambiado
-        html += "<label>Aten. Salida (dB)</label><input type='number' step='0.01' name='atSalidaDist'>"; // Cambiado
+        html += "<label>N&ordm; Salidas</label><input type='number' name='numSalidasDist' placeholder='Ej: 4'>"; 
+        html += "<label>Aten. Salida (dB)</label><input type='number' step='0.01' name='atSalidaDist' placeholder='Ej: 7.5'>"; 
         html += "</div>";
 
         html += "<button type='submit' class='btn-principal'>Guardar Componente</button>";
@@ -137,11 +149,14 @@ public class ComponentesHTML {
                 html += "<div class='tarjeta-componente'>";
                 html += "<div class='etiqueta-tipo'>" + escapar(c.getTipo()) + "</div>";
                 html += "<h3>" + escapar(c.getModelo()) + "</h3>";
-                html += "<div class='fila-dato'><span>Precio</span><span>" + mostrarDouble(c.getPrecio()) + " &euro;</span></div>";
+                
+                // Muestra la unidad correcta en la galería según el tipo
+                String unidadPrecio = "Cable Coaxial".equals(c.getTipo()) ? " &euro;/m" : " &euro;";
+                html += "<div class='fila-dato'><span>Precio</span><span>" + mostrarDouble(c.getPrecio()) + unidadPrecio + "</span></div>";
 
                 if ("Cable Coaxial".equals(c.getTipo())) {
-                    html += "<div class='fila-dato'><span>Aten. 470MHz</span><span>" + mostrarDouble(c.getAt470()) + " dB</span></div>";
-                    html += "<div class='fila-dato'><span>Aten. 862MHz</span><span>" + mostrarDouble(c.getAt862()) + " dB</span></div>";
+                    html += "<div class='fila-dato'><span>Aten. 470MHz</span><span>" + mostrarDouble(c.getAt470()) + " dB/100m</span></div>";
+                    html += "<div class='fila-dato'><span>Aten. 862MHz</span><span>" + mostrarDouble(c.getAt862()) + " dB/100m</span></div>";
                 } else if ("Toma".equals(c.getTipo())) {
                     html += "<div class='fila-dato'><span>Aten. Deriv.</span><span>" + mostrarDouble(c.getAtDerivacion()) + " dB</span></div>";
                 } else if ("Derivador".equals(c.getTipo())) {

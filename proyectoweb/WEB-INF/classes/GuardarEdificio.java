@@ -25,10 +25,20 @@ public class GuardarEdificio extends HttpServlet {
             double distPlantas      = Double.parseDouble(request.getParameter("dist_plantas"));
             double distDerDist      = Double.parseDouble(request.getParameter("dist_der_dist"));
             double distDistToma     = Double.parseDouble(request.getParameter("dist_dist_toma"));
+            // 1. Recoger los nuevos datos del formulario
+            int vivPorPlanta = Integer.parseInt(request.getParameter("viv_planta"));
+            int tomasPorViv  = Integer.parseInt(request.getParameter("tomas_viv"));
 
+            // 2. Cálculo del precio real (ejemplo lógico)
+            double precioTotalBruto = Double.parseDouble(request.getParameter("precioTotal"));
+            // El precio total real sería: (Precio componentes vivienda * total viviendas) + troncal
+            // Para simplificar, puedes multiplicar el precio que ya tienes por el volumen:
+            double precioAjustado = precioTotalBruto * (vivPorPlanta * numPlantas); 
+
+            // 3. Llamar al DAO con el precio ajustado
             HistorialDAO.insertar(
                 rutaBD, nombre, numPlantas,
-                nivelPrimera, nivelUltima, precioTotal,
+                nivelPrimera, nivelUltima, precioAjustado, // <--- PRECIO REAL
                 idCable, idDistribuidor, idToma, idsDerivadores,
                 cabecera, distPlantas, distDerDist, distDistToma
             );

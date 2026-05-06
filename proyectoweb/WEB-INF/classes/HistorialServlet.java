@@ -23,6 +23,6 @@ public class HistorialServlet extends HttpServlet {
         }
 
         PrintWriter out = response.getWriter();
-        out.println(HistorialHTML.generarPagina(entradas, mensaje));
+        out.println(HistorialHTML.generarPagina(entradas, mensaje, rutaBD));
     }
 }

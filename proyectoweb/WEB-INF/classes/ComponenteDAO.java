@@ -211,4 +211,21 @@ public class ComponenteDAO {
         ps.setString(1, param);
         return ps;
     }
+    
+    public static String obtenerNombrePorId(String rutaBD, int id) {
+        String modelo = "Desconocido";
+        try {
+            Connection conexion = BaseDatos.getConexion(rutaBD);
+            PreparedStatement ps = conexion.prepareStatement("SELECT modelo FROM [Componentes] WHERE Id = ?");
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                modelo = rs.getString("modelo");
+            }
+            conexion.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return modelo;
+    }
 }

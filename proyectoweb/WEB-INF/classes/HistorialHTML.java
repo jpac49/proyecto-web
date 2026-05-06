@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class HistorialHTML {
 
-    public static String generarPagina(ArrayList<HistorialEntrada> entradas, String mensaje) {
+    public static String generarPagina(ArrayList<HistorialEntrada> entradas, String mensaje, String rutaBD) {
 
         String html = "";
         html += "<!DOCTYPE html><html lang='es'><head><meta charset='UTF-8'>";
@@ -36,6 +36,16 @@ public class HistorialHTML {
         html += ".etiqueta { display: inline-block; background: #f1f1f1; border: 1px solid #ddd; border-radius: 20px; padding: 3px 10px; font-size: 0.82rem; color: #333; }";
         html += "</style>";
 
+        // Script de cierre de aplicación
+        html += "<script>";
+        html += "function cerrarApp() {";
+        html += "  if (confirm('¿Desea cerrar la aplicación?')) {";
+        html += "    window.close();";
+        html += "    window.location.href = 'about:blank';";
+        html += "  }";
+        html += "}";
+        html += "</script>";
+
         html += "</head><body>";
 
         // Navbar
@@ -44,7 +54,7 @@ public class HistorialHTML {
         html += "<a href='componentes'>Ingresar Componentes</a>";
         html += "<a href='calcular'>Calcular Plantas</a>";
         html += "<a href='historial' class='activo'>Historial</a>";
-        html += "<a href='#' class='salir'>Salir</a>";
+        html += "<button onclick='cerrarApp()' style='margin-left:auto; background:#e33629; color:white; border:none; padding:10px 14px; border-radius:8px; cursor:pointer; font-size:1.1rem;'>Salir</button>";
         html += "</div>";
 
         html += "<div class='content'><div class='contenedor'>";
@@ -93,13 +103,19 @@ public class HistorialHTML {
                 html += "<td>" + String.format("%.2f", h.nivelUltimaPlanta) + " dB&micro;V</td>";
                 html += "<td>" + String.format("%.2f", h.precioTotal) + " &euro;</td>";
                 html += "<td>";
-                html += "<span class='etiqueta'>Cable #" + h.idCable + "</span> ";
-                html += "<span class='etiqueta'>Dist. #" + h.idDistribuidor + "</span> ";
-                html += "<span class='etiqueta'>Toma #" + h.idToma + "</span> ";
-                // Mostramos cada derivador
+                html += "<span class='etiqueta'>Cable: " + escapar(h.modeloCable) + "</span> ";
+                html += "<span class='etiqueta'>Dist: " + escapar(h.modeloDistribuidor) + "</span> ";
+                html += "<span class='etiqueta'>Toma: " + escapar(h.modeloToma) + "</span> ";
+                // Mostramos los derivadores
+                // Busca esta sección en tu archivo y reemplázala:
                 String[] derivIds = h.idsDerivadores.split(",");
                 for (String did : derivIds) {
-                    html += "<span class='etiqueta'>Deriv. #" + did.trim() + "</span> ";
+                    if (!did.trim().isEmpty()) {
+                        int idInt = Integer.parseInt(did.trim());
+                        // Buscamos el modelo real usando el ID
+                        String nombreModelo = ComponenteDAO.obtenerNombrePorId(rutaBD, idInt); 
+                        html += "<span class='etiqueta'>Deriv: " + escapar(nombreModelo) + "</span> ";
+                    }
                 }
                 html += "</td>";
                 String fechaCorta = (h.fecha != null && h.fecha.length() >= 16) ? h.fecha.substring(0, 16) : h.fecha;

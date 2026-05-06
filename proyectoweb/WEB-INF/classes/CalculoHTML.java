@@ -137,6 +137,16 @@ public class CalculoHTML {
         html += ".guardar-box h3 { margin: 0 0 14px 0; font-size: 1rem; color: #333; }";
         html += "</style>";
 
+        // Script de cierre de aplicación
+        html += "<script>";
+        html += "function cerrarApp() {";
+        html += "  if (confirm('¿Desea cerrar la aplicación?')) {";
+        html += "    window.close();";
+        html += "    window.location.href = 'about:blank';";
+        html += "  }";
+        html += "}";
+        html += "</script>";
+
         // ── JAVASCRIPT ──
         html += "<script>";
         html += "var datosComp = {";
@@ -192,7 +202,7 @@ public class CalculoHTML {
         html += "<a href='componentes'>Ingresar Componentes</a>";
         html += "<a href='calcular' class='activo'>Calcular Plantas</a>";
         html += "<a href='historial'>Historial</a>";
-        html += "<a href='#' class='salir'>Salir</a>";
+        html += "<button onclick='cerrarApp()' style='margin-left:auto; background:#e33629; color:white; border:none; padding:10px 14px; border-radius:8px; cursor:pointer; font-size:1.1rem;'>Salir</button>";
         html += "</div>";
 
         html += "<div class='content'><div class='contenedor-calculo'><h1>Calcular Plantas</h1>";
@@ -251,7 +261,7 @@ public class CalculoHTML {
         }
         html += "</select><div id='info-deriv-1' class='info-lista'></div>";
 
-        // Derivadores adicionales (si los había al calcular)
+        // Derivadores adicionales
         if (selDerivadores != null && selDerivadores.length > 1) {
             for (int i = 1; i < selDerivadores.length; i++) {
                 final String idSelDeriv = selDerivadores[i];
@@ -321,10 +331,19 @@ public class CalculoHTML {
                 html += "<div class='guardar-box'>";
                 html += "<h3>💾 Guardar en Historial</h3>";
                 html += "<form action='guardarEdificio' method='GET'>";
+                
+                // Nuevos campos obligatorios en la derecha
+                html += "<div class='grid-2'>";
+                html += "  <div><label>Nº Viviendas / Planta</label>";
+                html += "  <input type='number' name='viv_planta' placeholder='Ej: 4' required></div>";
+                html += "  <div><label>Nº Tomas / Vivienda</label>";
+                html += "  <input type='number' name='tomas_viv' placeholder='Ej: 2' required></div>";
+                html += "</div>";
+                
                 html += "<label for='nombre'>Nombre del edificio</label>";
                 html += "<input type='text' id='nombre' name='nombre' value='" + escapar(nombreDefecto) + "' required>";
 
-                // Campos ocultos con todos los datos necesarios
+                // Campos ocultos
                 html += "<input type='hidden' name='numPlantas'   value='" + maxPlantasResult + "'>";
                 html += "<input type='hidden' name='nivelPrimera' value='" + nivelPrimera + "'>";
                 html += "<input type='hidden' name='nivelUltima'  value='" + nivelUltima + "'>";
@@ -338,7 +357,7 @@ public class CalculoHTML {
                 html += "<input type='hidden' name='dist_der_dist'  value='" + valDistDerDist + "'>";
                 html += "<input type='hidden' name='dist_dist_toma' value='" + valDistDistToma + "'>";
 
-                html += "<button type='submit' class='btn-guardar'>Guardar Edificio</button>";
+                html += "<button type='submit' class='btn-guardar'>Confirmar y Guardar</button>";
                 html += "</form></div>";
             }
 
