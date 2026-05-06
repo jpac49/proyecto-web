@@ -1,7 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
-         http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                             http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
     <display-name>Simulador de Señal TV - ICT</display-name>
@@ -10,11 +11,11 @@
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
 
+    <!-- Componentes -->
     <servlet>
         <servlet-name>ComponentesServlet</servlet-name>
         <servlet-class>ComponentesServlet</servlet-class>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>ComponentesServlet</servlet-name>
         <url-pattern>/componentes</url-pattern>
@@ -24,7 +25,6 @@
         <servlet-name>GuardarComponente</servlet-name>
         <servlet-class>GuardarComponente</servlet-class>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>GuardarComponente</servlet-name>
         <url-pattern>/guardarComponente</url-pattern>
@@ -34,20 +34,42 @@
         <servlet-name>EliminarComponente</servlet-name>
         <servlet-class>EliminarComponente</servlet-class>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>EliminarComponente</servlet-name>
         <url-pattern>/eliminarComponente</url-pattern>
     </servlet-mapping>
-	
-	<servlet>
-        <servlet-name>CalculoServlet</servlet-name>
-        <servlet-class>CalculoServlet</servlet-class>
-    </servlet>
 
+    <!-- Cálculo -->
+    <servlet>
+        <servlet-name>EjecutarCalculo</servlet-name>
+        <servlet-class>EjecutarCalculo</servlet-class>
+    </servlet>
     <servlet-mapping>
-        <servlet-name>CalculoServlet</servlet-name>
+        <servlet-name>EjecutarCalculo</servlet-name>
         <url-pattern>/calcular</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EjecutarCalculo</servlet-name>
+        <url-pattern>/ejecutarCalculo</url-pattern>
+    </servlet-mapping>
+
+    <!-- Historial -->
+    <servlet>
+        <servlet-name>HistorialServlet</servlet-name>
+        <servlet-class>HistorialServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>HistorialServlet</servlet-name>
+        <url-pattern>/historial</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GuardarEdificio</servlet-name>
+        <servlet-class>GuardarEdificio</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GuardarEdificio</servlet-name>
+        <url-pattern>/guardarEdificio</url-pattern>
     </servlet-mapping>
 
 </web-app>

@@ -178,4 +178,37 @@ public class ComponenteDAO {
             if (conexion != null) conexion.close();
         }
     }
+    
+    public static Componente obtenerPorId(String rutaBD, int id) throws Exception {
+        ArrayList<Componente> todos = listar(rutaBD);
+        for(Componente c : todos) {
+            if(c.getId() == id) return c;
+        }
+        return null;
+    }
+    
+    public static ArrayList<Componente> listarPorTipo(String rutaBD, String tipoBuscado) {
+        ArrayList<Componente> filtrados = new ArrayList<>();
+        try {
+            // Aprovechamos el método listar que YA saca todos los datos correctamente de todas las tablas
+            ArrayList<Componente> todos = listar(rutaBD);
+            
+            for (Componente c : todos) {
+                if (c.getTipo().equalsIgnoreCase(tipoBuscado)) {
+                    filtrados.add(c);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error al filtrar por tipo: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return filtrados;
+    }
+
+    // Método auxiliar para evitar errores de PreparedStatement si no lo tenías
+    private static PreparedStatement psConParametro(Connection con, String sql, String param) throws Exception {
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, param);
+        return ps;
+    }
 }

@@ -11,7 +11,7 @@ public class BaseDatos {
             throw new SQLException("No se encontró el driver UCanAccess", e);
         }
 
-        String url = "jdbc:ucanaccess://" + rutaBD;
+        String url = "jdbc:ucanaccess://" + rutaBD + ";memory=false";
         return DriverManager.getConnection(url);
     }
 }
