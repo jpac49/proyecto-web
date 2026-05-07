@@ -141,4 +141,15 @@ public class HistorialDAO {
 
         return count;
     }
+    public static HistorialEntrada obtenerPorId(String rutaBD, int idBuscado) throws Exception {
+        ArrayList<HistorialEntrada> todos = listar(rutaBD);
+
+        for (HistorialEntrada h : todos) {
+            if (h.id == idBuscado) {
+                return h;
+            }
+        }
+
+        return null;
+    }
 }

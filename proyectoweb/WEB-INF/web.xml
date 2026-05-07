@@ -71,5 +71,13 @@
         <servlet-name>GuardarEdificio</servlet-name>
         <url-pattern>/guardarEdificio</url-pattern>
     </servlet-mapping>
+<servlet>
+    <servlet-name>VerGraficoHistorial</servlet-name>
+    <servlet-class>VerGraficoHistorial</servlet-class>
+</servlet>
 
+<servlet-mapping>
+    <servlet-name>VerGraficoHistorial</servlet-name>
+    <url-pattern>/verGraficoHistorial</url-pattern>
+</servlet-mapping>
 </web-app>

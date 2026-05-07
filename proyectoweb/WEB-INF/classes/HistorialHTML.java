@@ -36,7 +36,6 @@ public class HistorialHTML {
         html += ".etiqueta { display: inline-block; background: #f1f1f1; border: 1px solid #ddd; border-radius: 20px; padding: 3px 10px; font-size: 0.82rem; color: #333; }";
         html += "</style>";
 
-        // Script de cierre de aplicación
         html += "<script>";
         html += "function cerrarApp() {";
         html += "  if (confirm('¿Desea cerrar la aplicación?')) {";
@@ -48,7 +47,6 @@ public class HistorialHTML {
 
         html += "</head><body>";
 
-        // Navbar
         html += "<div class='navbar'>";
         html += "<span class='logo'>📡 Simulador TV</span>";
         html += "<a href='componentes'>Ingresar Componentes</a>";
@@ -85,16 +83,10 @@ public class HistorialHTML {
 
             for (HistorialEntrada h : entradas) {
 
-                // Construimos la URL para reproducir el cálculo
-                String urlCalculo = "ejecutarCalculo"
-                    + "?cable="        + h.idCable
-                    + "&distribuidor=" + h.idDistribuidor
-                    + "&toma="         + h.idToma
-                    + "&derivadores="  + h.idsDerivadores.replace(",", "&derivadores=")
-                    + "&cabecera="     + h.cabecera
-                    + "&dist_plantas=" + h.distPlantas
-                    + "&dist_der_dist="+ h.distDerDist
-                    + "&dist_dist_toma="+ h.distDistToma;
+                // CAMBIO IMPORTANTE:
+                // Antes aquí se construía una URL enorme hacia ejecutarCalculo.
+                // Ahora mandamos solo el ID al nuevo servlet VerGraficoHistorial.
+                String urlCalculo = "verGraficoHistorial?id=" + h.id;
 
                 html += "<tr>";
                 html += "<td><strong>" + escapar(h.nombre) + "</strong></td>";
@@ -102,25 +94,35 @@ public class HistorialHTML {
                 html += "<td>" + String.format("%.2f", h.nivelPrimeraPlanta) + " dB&micro;V</td>";
                 html += "<td>" + String.format("%.2f", h.nivelUltimaPlanta) + " dB&micro;V</td>";
                 html += "<td>" + String.format("%.2f", h.precioTotal) + " &euro;</td>";
+
                 html += "<td>";
                 html += "<span class='etiqueta'>Cable: " + escapar(h.modeloCable) + "</span> ";
                 html += "<span class='etiqueta'>Dist: " + escapar(h.modeloDistribuidor) + "</span> ";
                 html += "<span class='etiqueta'>Toma: " + escapar(h.modeloToma) + "</span> ";
-                // Mostramos los derivadores
-                // Busca esta sección en tu archivo y reemplázala:
-                String[] derivIds = h.idsDerivadores.split(",");
-                for (String did : derivIds) {
-                    if (!did.trim().isEmpty()) {
-                        int idInt = Integer.parseInt(did.trim());
-                        // Buscamos el modelo real usando el ID
-                        String nombreModelo = ComponenteDAO.obtenerNombrePorId(rutaBD, idInt); 
-                        html += "<span class='etiqueta'>Deriv: " + escapar(nombreModelo) + "</span> ";
+
+                if (h.idsDerivadores != null && !h.idsDerivadores.trim().equals("")) {
+                    String[] derivIds = h.idsDerivadores.split(",");
+
+                    for (String did : derivIds) {
+                        if (!did.trim().isEmpty()) {
+                            try {
+                                int idInt = Integer.parseInt(did.trim());
+                                String nombreModelo = ComponenteDAO.obtenerNombrePorId(rutaBD, idInt);
+                                html += "<span class='etiqueta'>Deriv: " + escapar(nombreModelo) + "</span> ";
+                            } catch (Exception e) {
+                                html += "<span class='etiqueta'>Deriv: desconocido</span> ";
+                            }
+                        }
                     }
                 }
+
                 html += "</td>";
+
                 String fechaCorta = (h.fecha != null && h.fecha.length() >= 16) ? h.fecha.substring(0, 16) : h.fecha;
                 html += "<td>" + escapar(fechaCorta) + "</td>";
+
                 html += "<td><a href='" + urlCalculo + "' class='btn-ver'>Ver gr&aacute;fico</a></td>";
+
                 html += "</tr>";
             }
 
@@ -135,7 +137,7 @@ public class HistorialHTML {
     private static String escapar(String texto) {
         if (texto == null) return "";
         return texto.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
-                    .replace("á", "&aacute;").replace("é", "&eacute;").replace("í", "&iacute;")
-                    .replace("ó", "&oacute;").replace("ú", "&uacute;").replace("ñ", "&ntilde;");
+                .replace("á", "&aacute;").replace("é", "&eacute;").replace("í", "&iacute;")
+                .replace("ó", "&oacute;").replace("ú", "&uacute;").replace("ñ", "&ntilde;");
     }
 }
