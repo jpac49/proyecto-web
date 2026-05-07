@@ -3,10 +3,6 @@ import java.util.ArrayList;
 
 public class HistorialDAO {
 
-    /**
-     * Inserta un nuevo registro en el historial. 
-     * Se mantiene igual, ya que el precio real se calcula en el Servlet antes de llamar a este método.
-     */
     public static void insertar(
         String rutaBD,
         String nombre,
@@ -59,10 +55,6 @@ public class HistorialDAO {
         }
     }
 
-    /**
-     * Lista el historial vinculando (JOIN) con la tabla Componentes 
-     * para obtener los nombres de los modelos en lugar de solo los IDs.
-     */
     public static ArrayList<HistorialEntrada> listar(String rutaBD) throws Exception {
 
         ArrayList<HistorialEntrada> lista = new ArrayList<HistorialEntrada>();
@@ -73,7 +65,6 @@ public class HistorialDAO {
         try {
             conexion = BaseDatos.getConexion(rutaBD);
 
-            // Consulta con TRIPLE JOIN para traer los nombres de serie de los 3 componentes principales
             String sql = "SELECT H.*, " +
                          "C.modelo AS NomCable, " +
                          "D.modelo AS NomDist, " +
@@ -104,12 +95,9 @@ public class HistorialDAO {
                 h.distPlantas        = rs.getDouble("DistPlantas");
                 h.distDerDist        = rs.getDouble("DistDerDist");
                 h.distDistToma       = rs.getDouble("DistDistToma");
-
-                // NUEVOS: Guardamos los nombres recuperados del JOIN en el objeto
                 h.modeloCable        = rs.getString("NomCable");
                 h.modeloDistribuidor = rs.getString("NomDist");
                 h.modeloToma         = rs.getString("NomToma");
-
                 lista.add(h);
             }
 
@@ -141,15 +129,28 @@ public class HistorialDAO {
 
         return count;
     }
+
     public static HistorialEntrada obtenerPorId(String rutaBD, int idBuscado) throws Exception {
         ArrayList<HistorialEntrada> todos = listar(rutaBD);
-
         for (HistorialEntrada h : todos) {
-            if (h.id == idBuscado) {
-                return h;
-            }
+            if (h.id == idBuscado) return h;
         }
-
         return null;
+    }
+
+    public static void eliminar(String rutaBD, int id) throws Exception {
+        Connection conexion = null;
+        PreparedStatement ps = null;
+
+        try {
+            conexion = BaseDatos.getConexion(rutaBD);
+            ps = conexion.prepareStatement("DELETE FROM [Historial] WHERE [Id] = ?");
+            ps.setInt(1, id);
+            ps.executeUpdate();
+
+        } finally {
+            if (ps != null) ps.close();
+            if (conexion != null) conexion.close();
+        }
     }
 }

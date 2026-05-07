@@ -16,7 +16,6 @@ public class HistorialHTML {
         html += ".navbar a { color: white; text-decoration: none; padding: 10px 14px; border-radius: 8px; font-size: 1.1rem; }";
         html += ".navbar a:hover { background: #555; }";
         html += ".navbar a.activo { background: #5a5a5a; }";
-        html += ".salir { margin-left: auto; background: #e33629; }";
         html += ".content { padding: 30px; }";
         html += ".contenedor { max-width: 1250px; margin: 0 auto; }";
         html += "h1 { font-size: 2.2rem; margin-bottom: 28px; }";
@@ -32,8 +31,11 @@ public class HistorialHTML {
         html += ".vacio { color: #888; font-style: italic; text-align: center; padding: 40px; }";
         html += ".btn-ver { background: #1a73e8; color: white; border: none; padding: 7px 14px; border-radius: 6px; cursor: pointer; font-size: 0.88rem; font-weight: bold; text-decoration: none; white-space: nowrap; display: inline-block; }";
         html += ".btn-ver:hover { background: #1557b0; }";
+        html += ".btn-eliminar { background: #d93025; color: white; border: none; padding: 7px 14px; border-radius: 6px; cursor: pointer; font-size: 0.88rem; font-weight: bold; white-space: nowrap; display: inline-block; margin-left: 8px; }";
+        html += ".btn-eliminar:hover { background: #b3261e; }";
         html += ".mensaje { background: #fff3cd; padding: 12px; border-radius: 8px; border: 1px solid #ffecb5; margin-bottom: 20px; }";
         html += ".etiqueta { display: inline-block; background: #f1f1f1; border: 1px solid #ddd; border-radius: 20px; padding: 3px 10px; font-size: 0.82rem; color: #333; }";
+        html += ".acciones { white-space: nowrap; }";
         html += "</style>";
 
         html += "<script>";
@@ -77,15 +79,12 @@ public class HistorialHTML {
             html += "<th>Precio Total</th>";
             html += "<th>Componentes</th>";
             html += "<th>Fecha</th>";
-            html += "<th>Gr&aacute;fico</th>";
+            html += "<th>Acciones</th>";
             html += "</tr></thead>";
             html += "<tbody>";
 
             for (HistorialEntrada h : entradas) {
 
-                // CAMBIO IMPORTANTE:
-                // Antes aquí se construía una URL enorme hacia ejecutarCalculo.
-                // Ahora mandamos solo el ID al nuevo servlet VerGraficoHistorial.
                 String urlCalculo = "verGraficoHistorial?id=" + h.id;
 
                 html += "<tr>";
@@ -102,7 +101,6 @@ public class HistorialHTML {
 
                 if (h.idsDerivadores != null && !h.idsDerivadores.trim().equals("")) {
                     String[] derivIds = h.idsDerivadores.split(",");
-
                     for (String did : derivIds) {
                         if (!did.trim().isEmpty()) {
                             try {
@@ -115,13 +113,17 @@ public class HistorialHTML {
                         }
                     }
                 }
-
                 html += "</td>";
 
                 String fechaCorta = (h.fecha != null && h.fecha.length() >= 16) ? h.fecha.substring(0, 16) : h.fecha;
                 html += "<td>" + escapar(fechaCorta) + "</td>";
 
-                html += "<td><a href='" + urlCalculo + "' class='btn-ver'>Ver gr&aacute;fico</a></td>";
+                // Columna de acciones: Ver gráfico + Eliminar
+                html += "<td class='acciones'>";
+                html += "<a href='" + urlCalculo + "' class='btn-ver'>Ver gr&aacute;fico</a>";
+                html += "<a href='eliminarHistorial?id=" + h.id + "' class='btn-eliminar' ";
+                html += "onclick=\"return confirm('¿Seguro que quieres eliminar " + escapar(h.nombre) + "?');\">Eliminar</a>";
+                html += "</td>";
 
                 html += "</tr>";
             }

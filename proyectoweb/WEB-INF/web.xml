@@ -71,13 +71,23 @@
         <servlet-name>GuardarEdificio</servlet-name>
         <url-pattern>/guardarEdificio</url-pattern>
     </servlet-mapping>
-<servlet>
-    <servlet-name>VerGraficoHistorial</servlet-name>
-    <servlet-class>VerGraficoHistorial</servlet-class>
-</servlet>
 
-<servlet-mapping>
-    <servlet-name>VerGraficoHistorial</servlet-name>
-    <url-pattern>/verGraficoHistorial</url-pattern>
-</servlet-mapping>
+    <servlet>
+        <servlet-name>VerGraficoHistorial</servlet-name>
+        <servlet-class>VerGraficoHistorial</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>VerGraficoHistorial</servlet-name>
+        <url-pattern>/verGraficoHistorial</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>EliminarHistorial</servlet-name>
+        <servlet-class>EliminarHistorial</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EliminarHistorial</servlet-name>
+        <url-pattern>/eliminarHistorial</url-pattern>
+    </servlet-mapping>
+
 </web-app>
