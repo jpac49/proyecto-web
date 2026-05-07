@@ -9,6 +9,7 @@ public class HistorialHTML {
         html += "<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>";
         html += "<title>Historial - Simulador ICT</title>";
 
+// --- BLOQUE DE ESTILOS (CSS) ---
         html += "<style>";
         html += "body { font-family: Arial, sans-serif; margin: 0; background-color: #f5f5f5; }";
         html += ".navbar { background: #333; color: white; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 35px; }";
@@ -38,6 +39,7 @@ public class HistorialHTML {
         html += ".acciones { white-space: nowrap; }";
         html += "</style>";
 
+// --- BLOQUE DE JAVASCRIPT ---
         html += "<script>";
         html += "function cerrarApp() {";
         html += "  if (confirm('¿Desea cerrar la aplicación?')) {";
@@ -48,7 +50,8 @@ public class HistorialHTML {
         html += "</script>";
 
         html += "</head><body>";
-
+        
+// --- BARRA DE NAVEGACIÓN ---
         html += "<div class='navbar'>";
         html += "<span class='logo'>📡 Simulador TV</span>";
         html += "<a href='componentes'>Ingresar Componentes</a>";
@@ -59,7 +62,8 @@ public class HistorialHTML {
 
         html += "<div class='content'><div class='contenedor'>";
         html += "<h1>Historial de Edificios</h1>";
-
+        
+// Si el Servlet nos envía un mensaje de "Borrado con éxito", se muestra aquí
         if (mensaje != null && !mensaje.equals("")) {
             html += "<div class='mensaje'>" + escapar(mensaje) + "</div>";
         }
@@ -67,6 +71,7 @@ public class HistorialHTML {
         html += "<div class='tabla-card'>";
         html += "<h2>Edificios Guardados</h2><hr>";
 
+// Lógica de control: Si no hay datos, mostramos un aviso en lugar de una tabla vacía
         if (entradas.isEmpty()) {
             html += "<p class='vacio'>No hay edificios guardados todav&iacute;a.</p>";
         } else {
@@ -83,27 +88,33 @@ public class HistorialHTML {
             html += "</tr></thead>";
             html += "<tbody>";
 
+// RECORRIDO DE DATOS: Por cada edificio en la lista, creamos una fila <tr>
             for (HistorialEntrada h : entradas) {
-
+                
+// Generamos la URL única para ver el gráfico de este edificio específico por su ID
                 String urlCalculo = "verGraficoHistorial?id=" + h.id;
 
                 html += "<tr>";
                 html += "<td><strong>" + escapar(h.nombre) + "</strong></td>";
                 html += "<td>" + h.numPlantas + "</td>";
+                
+    // Formateamos a 2 decimales
                 html += "<td>" + String.format("%.2f", h.nivelPrimeraPlanta) + " dB&micro;V</td>";
                 html += "<td>" + String.format("%.2f", h.nivelUltimaPlanta) + " dB&micro;V</td>";
                 html += "<td>" + String.format("%.2f", h.precioTotal) + " &euro;</td>";
-
+// Celda de componentes usados (Cable, Distribuidor y Toma)
                 html += "<td>";
                 html += "<span class='etiqueta'>Cable: " + escapar(h.modeloCable) + "</span> ";
                 html += "<span class='etiqueta'>Dist: " + escapar(h.modeloDistribuidor) + "</span> ";
                 html += "<span class='etiqueta'>Toma: " + escapar(h.modeloToma) + "</span> ";
 
+// PROCESAMIENTO DE DERIVADORES: Al ser una lista de IDs, los separamos por la coma
                 if (h.idsDerivadores != null && !h.idsDerivadores.trim().equals("")) {
                     String[] derivIds = h.idsDerivadores.split(",");
                     for (String did : derivIds) {
                         if (!did.trim().isEmpty()) {
                             try {
+// Pedimos al DAO el nombre comercial usando el ID
                                 int idInt = Integer.parseInt(did.trim());
                                 String nombreModelo = ComponenteDAO.obtenerNombrePorId(rutaBD, idInt);
                                 html += "<span class='etiqueta'>Deriv: " + escapar(nombreModelo) + "</span> ";
@@ -114,13 +125,14 @@ public class HistorialHTML {
                     }
                 }
                 html += "</td>";
-
+// Recortamos la fecha para no mostrar milisegundos (YYYY-MM-DD HH:MM)
                 String fechaCorta = (h.fecha != null && h.fecha.length() >= 16) ? h.fecha.substring(0, 16) : h.fecha;
                 html += "<td>" + escapar(fechaCorta) + "</td>";
 
                 // Columna de acciones: Ver gráfico + Eliminar
                 html += "<td class='acciones'>";
                 html += "<a href='" + urlCalculo + "' class='btn-ver'>Ver gr&aacute;fico</a>";
+// Al eliminar, pasamos el ID por parámetro GET (?id=...)
                 html += "<a href='eliminarHistorial?id=" + h.id + "' class='btn-eliminar' ";
                 html += "onclick=\"return confirm('¿Seguro que quieres eliminar " + escapar(h.nombre) + "?');\">Eliminar</a>";
                 html += "</td>";
@@ -136,6 +148,7 @@ public class HistorialHTML {
         return html;
     }
 
+// FUNCIÓN DE SEGURIDAD: Evita errores de visualización con tildes y símbolos HTML
     private static String escapar(String texto) {
         if (texto == null) return "";
         return texto.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")

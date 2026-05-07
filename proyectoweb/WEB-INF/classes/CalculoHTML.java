@@ -14,7 +14,7 @@ public class CalculoHTML {
         List<Double> nivelesPorPlanta,
         List<String> modelosDerivPorPlanta,
         List<String> logsCambios,
-        // Valores seleccionados para repoblar el formulario (pueden ser null)
+        // Valores seleccionados para repoblar el formulario
         String selCable,
         String selDistribuidor,
         String selToma,
@@ -29,7 +29,7 @@ public class CalculoHTML {
             maxPlantasResult, nivelesPorPlanta, modelosDerivPorPlanta, logsCambios,
             selCable, selDistribuidor, selToma, selDerivadores,
             valCabecera, valDistPlantas, valDistDerDist, valDistDistToma,
-            null, 0, 0, 0, null
+            null, 0, 0, 0, 0, 0, 1, null
         );
     }
 
@@ -55,7 +55,10 @@ public class CalculoHTML {
         String nombreDefecto,
         double nivelPrimera,
         double nivelUltima,
-        double precioTotal,
+        double costeTroncal,
+        double costePorDistribuidor,
+        double costePorToma,
+        int numSalidasDist,
         String idsDerivStr
     ) {
         return generarPaginaCompleta(
@@ -63,7 +66,9 @@ public class CalculoHTML {
             maxPlantasResult, nivelesPorPlanta, modelosDerivPorPlanta, logsCambios,
             selCable, selDistribuidor, selToma, selDerivadores,
             valCabecera, valDistPlantas, valDistDerDist, valDistDistToma,
-            nombreDefecto, nivelPrimera, nivelUltima, precioTotal, idsDerivStr
+            nombreDefecto, nivelPrimera, nivelUltima,
+            costeTroncal, costePorDistribuidor, costePorToma, numSalidasDist,
+            idsDerivStr
         );
     }
 
@@ -88,10 +93,14 @@ public class CalculoHTML {
         String nombreDefecto,
         double nivelPrimera,
         double nivelUltima,
-        double precioTotal,
+        double costeTroncal,
+        double costePorDistribuidor,
+        double costePorToma,
+        int numSalidasDist,
         String idsDerivStr
     ) {
         String html = "";
+        // ... (Cabecera y CSS) ...
         html += "<!DOCTYPE html><html lang='es'><head><meta charset='UTF-8'>";
         html += "<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>";
         html += "<title>Calcular Plantas - Simulador ICT</title>";
@@ -152,6 +161,7 @@ public class CalculoHTML {
         html += "var datosComp = {";
         for (Componente c : cables)
             html += "'c" + c.getId() + "': ['Aten. 862 MHz: " + (c.getAt862() != null ? c.getAt862() : 0) + " dB/100m'],";
+            //html += "'c" + c.getId() + "': ['Aten. 470 MHz: " + (c.getAt470() != null ? c.getAt470() : 0) + " dB/100m'],";
         for (Componente c : tomas)
             html += "'t" + c.getId() + "': ['Aten. Derivaci\u00f3n: " + (c.getAtDerivacion() != null ? c.getAtDerivacion() : 0) + " dB'],";
         for (Componente c : derivadores)
@@ -160,6 +170,7 @@ public class CalculoHTML {
             html += "'di" + c.getId() + "': ['Aten. Salida: " + (c.getAtSalida() != null ? c.getAtSalida() : 0) + " dB'],";
         html += "};";
 
+// Función JS que actualiza el cuadro de información al cambiar el select
         html += "function mostrarInfo(select, idContenedor, prefijo) {";
         html += "  var infoBox = document.getElementById(idContenedor);";
         html += "  if (!select.value) { infoBox.innerHTML = ''; return; }";
@@ -196,7 +207,7 @@ public class CalculoHTML {
 
         html += "</head><body>";
 
-        // Navbar (sin Mi Edificio)
+        // Navbar
         html += "<div class='navbar'>";
         html += "<span class='logo'>📡 Simulador TV</span>";
         html += "<a href='componentes'>Ingresar Componentes</a>";
@@ -279,6 +290,8 @@ public class CalculoHTML {
         html += "</div>";
         html += "<button type='button' class='btn-agregar' onclick='agregarDerivador()'>+ A&ntilde;adir Derivador adicional</button>";
 
+        html += "<p style='font-size:0.85rem; color:#888; margin-top:6px;'>⚠️ Asegúrese de que el derivador seleccionado tiene suficientes salidas para cubrir todas las viviendas por planta.</p>";
+
         html += "<div class='seccion-titulo'>Dimensiones y Distancias</div>";
         html += "<div class='grid-2'>";
 
@@ -301,6 +314,8 @@ public class CalculoHTML {
         html += "<div class='resultado-card'>";
         html += "<h2>Esquema de Distribuci&oacute;n</h2><hr>";
 
+        // --- DISEÑO DEL ESQUEMA (DERECHA) ---
+        // Si hay resultados (maxPlantasResult != null), dibujamos el edificio
         if (maxPlantasResult != null && nivelesPorPlanta != null) {
 
             if (logsCambios != null && !logsCambios.isEmpty()) {
@@ -343,11 +358,10 @@ public class CalculoHTML {
                 html += "<label for='nombre'>Nombre del edificio</label>";
                 html += "<input type='text' id='nombre' name='nombre' value='" + escapar(nombreDefecto) + "' required>";
 
-                // Campos ocultos
+                // Campos ocultos: datos del edificio y configuración
                 html += "<input type='hidden' name='numPlantas'   value='" + maxPlantasResult + "'>";
                 html += "<input type='hidden' name='nivelPrimera' value='" + nivelPrimera + "'>";
                 html += "<input type='hidden' name='nivelUltima'  value='" + nivelUltima + "'>";
-                html += "<input type='hidden' name='precioTotal'  value='" + precioTotal + "'>";
                 html += "<input type='hidden' name='cable'        value='" + selCable + "'>";
                 html += "<input type='hidden' name='distribuidor' value='" + selDistribuidor + "'>";
                 html += "<input type='hidden' name='toma'         value='" + selToma + "'>";
@@ -356,6 +370,12 @@ public class CalculoHTML {
                 html += "<input type='hidden' name='dist_plantas'   value='" + valDistPlantas + "'>";
                 html += "<input type='hidden' name='dist_der_dist'  value='" + valDistDerDist + "'>";
                 html += "<input type='hidden' name='dist_dist_toma' value='" + valDistDistToma + "'>";
+                // Costes unitarios calculados en EjecutarCalculo.
+                // GuardarEdificio los combina con vivPorPlanta y tomasPorViv para el precio final.
+                html += "<input type='hidden' name='costeTroncal'         value='" + costeTroncal + "'>";
+                html += "<input type='hidden' name='costePorDistribuidor' value='" + costePorDistribuidor + "'>";
+                html += "<input type='hidden' name='costePorToma'         value='" + costePorToma + "'>";
+                html += "<input type='hidden' name='numSalidasDist'       value='" + numSalidasDist + "'>"; 
 
                 html += "<button type='submit' class='btn-guardar'>Confirmar y Guardar</button>";
                 html += "</form></div>";

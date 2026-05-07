@@ -18,3 +18,4 @@ public class HistorialEntrada {
     public String modeloDistribuidor;
     public String modeloToma;
 }
+//Cuando el HistorialDAO lee la base de datos, rellena cada parametro.
